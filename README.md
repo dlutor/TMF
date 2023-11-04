@@ -23,4 +23,4 @@ bash ./shells/trainfood101.sh
 bash ./shells/trainfood101_vit.sh
 bash ./shells/trainN24News_a.sh
 ```
-"# TMF" 
+"# TMF Two-Stage Multimodal Fusion" 

@@ -233,10 +233,23 @@ def train(args):
     load_checkpoint(model, os.path.join(args.savedir, "model_best.pt"))
 
     model.eval()
+    metrics = model_eval(i_epoch + 1, train_loader, model, args, criterion, store_preds=True, type_="train")
+    logger.info("Train: " + logger_str(metrics))
+    log_metrics("Train", metrics, args, logger)
+    train = metrics["data"]
+
     metrics = model_eval(i_epoch + 1, val_loader, model, args, criterion, store_preds=True, type_="val")
     logger.info("Val  : " + logger_str(metrics))
     log_metrics("Val  ", metrics, args, logger)
     val = metrics["data"]
+
+    outs = {}
+    for key in val["outs"].keys():
+        outs[key] = np.row_stack((train["outs"][key], val["outs"][key]))
+    val = {
+        "tgts": np.hstack((train["tgts"], val["tgts"])),
+        "outs": outs,
+    }
 
     for test_name, test_loader in test_loaders.items():
         test_metrics = model_eval(

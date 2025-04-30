@@ -69,7 +69,7 @@ python stage2.py --output_dir ../saved --name CrisisMMD --dataset CrisisMMD \
 --data_nums 0
 ```
 
-### ood101
+### Food101
 ```python
 python stage2.py --output_dir ../saved --name food101 --dataset food101 \
 --model KNet  \
